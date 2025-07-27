@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  vote-program:
+    build: .
+    ports:
+      - "8899:8899"  # Solana validator RPC
+      - "8900:8900"  # Solana validator WebSocket
+    volumes:
+      - .:/app
+      - solana-data:/root/.local/share/solana
+    environment:
+      - ANCHOR_PROVIDER_URL=http://localhost:8899
+      - ANCHOR_WALLET=/root/.config/solana/id.json
+    command: /app/setup-docker.sh
+
+volumes:
+  solana-data: 
